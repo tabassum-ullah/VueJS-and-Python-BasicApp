@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Log-In{% endblock %} 
+
+{% block content %}
+
+<div id="app">
+ <div class="container p-3 my-3 border" style="width:75%;">
+  <form method = "POST">
+      <h3 align="center"> { heading }</h3>
+
+      <div class="mt-5">
+       <div class="col-12" v-for="input, index in login" :key="index">
+        <label for="">{input.title}</label>
+        <input :type="input.type" :id="input.id" :name="input.name" class="form-control">
+       </div>
+
+       <br/>
+       <button type="submit" class="btn btn-primary rounded-pill" style="letter-spacing: 1px;">Log-In</button>
+      </div>
+  </form>
+  </div>
+  </div>
+
+{% endblock %}

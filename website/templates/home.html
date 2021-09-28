@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} 
+
+{% block content %}
+<div id="app">
+ <h1 class="text-center mt-5"> { app_name } </h1>
+
+ <div class="d-flex mt-5">
+  <input v-model="task" type="text" placeholder="Enter task here" class="form-control">
+  <button @click="submitTask" class="btn btn-warning rounded=0">SUBMIT</button>
+ </div>
+
+
+ <table class="table table-bordered mt-5">
+  <thead>
+    <tr class="text-center">
+      <th scope="col">Task</th>
+      <th scope="col">Status</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr v-for="(task,index) in tasks" :key="index">
+     <td class="taskbody">
+       <span :class="{ 'finished': task.status === 'finished' }">
+         {task.name}
+       </span>
+     </td>
+     <td class="statusbody">
+       <span @click="changeStatus(index)" class="pointer" :class="{'text-danger': task.status==='to-do', 'text-warning': task.status==='in-progress', 'text-success': task.status==='finished'}">
+         { firstcharUpper(task.status) }
+       </span>
+     </td>
+     <td>
+       <div class="text-center pointer" @click="editTask(index)">
+         <span class="fa fa-pencil"></span>
+       </div>
+     </td>
+     <td>
+       <div class="text-center pointer" @click="deleteTask(index)">
+         <span class="fa fa-trash"></span>
+       </div>
+     </td>
+   </tr>    
+ </tbody>
+ </table>
+</div>
+
+<style scoped>
+  .d-flex{
+ margin-left: 60px;
+ margin-right: 60px;
+ margin-top: 30px;
+ width: 90%; 
+}
+.form-control{
+ font-size: 20px;
+}
+.btn{
+ font-size: 15px;
+}
+.heading{
+ background:rgb(64, 187, 187);
+ font-size: 20px;
+}
+.table{
+ margin-left: 60px;
+ margin-right: 60px;
+ width: 90%;
+ background: rgb(233, 233, 243);
+}
+.taskbody{
+ font-size: 20px;
+}
+.statusbody{
+ width: 120px; 
+ font-weight: bold;
+ font-size: 18px;
+}
+.pointer{
+ cursor: pointer;
+}
+.finished{
+ text-decoration: line-through;
+}
+
+</style>
+
+{% endblock %}
