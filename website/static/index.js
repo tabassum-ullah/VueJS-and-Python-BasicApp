@@ -1,6 +1,13 @@
+const baseURL = 'http://localhost:5000/api'
 const { createApp } = Vue
 const TaskApp = {
- 
+ props:{
+  label: {
+    type: String,
+    required: false,
+    default: "Upload Single File",
+  },
+ },
  data(){
   return{
    title: 'Sign-Up Form',
@@ -8,6 +15,7 @@ const TaskApp = {
    app_name: 'To-Do List Manager',
    task: '',
    editedTask: null,
+   uploadedImg: '',
    availableStatuses: ['to-do', 'in-progress', 'finished'],
    tasks: [
     {
@@ -88,6 +96,20 @@ const TaskApp = {
  },
  firstcharUpper(str){
    return str.charAt(0).toUpperCase() + str.slice(1);
+ },
+ async handleChange(){
+  let file = event.target.files[0];
+  const API = axios.create({
+    baseURL,
+    headers: {
+      'Content-Type': 'application/json'
+    }    
+  })
+  let formData = new FormData();
+  formData.append("file",file);
+  let {data} = await API.post("images/single-upload", formData);
+  console.log("API_UPLOAD_RESP", data);  
+  this.uploadedImg = data.imagePath;
  }
  },
  delimiters: ['{','}']

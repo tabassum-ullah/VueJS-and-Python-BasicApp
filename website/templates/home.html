@@ -5,7 +5,7 @@
  <h1 class="text-center mt-5"> { app_name } </h1>
 
  <div class="d-flex mt-5">
-  <input v-model="task" type="text" placeholder="Enter task here" class="form-control">
+  <input v-model="task" type="text" placeholder="Enter task here" class="form-control place_holder">
   <button @click="submitTask" class="btn btn-warning rounded=0">SUBMIT</button>
  </div>
 
@@ -14,7 +14,8 @@
   <thead>
     <tr class="text-center">
       <th scope="col">Task</th>
-      <th scope="col">Status</th>
+      <th scope="col">Status</th>      
+      <th scope="col">File Upload</th>
       <th scope="col">Edit</th>
       <th scope="col">Delete</th>
     </tr>
@@ -31,29 +32,45 @@
          { firstcharUpper(task.status) }
        </span>
      </td>
+     
+     <td>
+      <div class="d-flex">
+         <div>
+          <input type="file" class="form-control upload-input d-flex justify-content-center align-items-center" @change="handleChange()"> 
+          <div class="uploader-mask d-flex justify-content-center align-items-center">
+            <img src="../static/img/upload.png" class="uploader-icon img-fluid" alt="">
+          </div> 
+         </div>
+         <img v-if="uploadedImg" :src="uploadedImg" class="img-fluid img-thumbnail ml-3 uploaded-img" alt="Uploaded Image">
+       </div>
+      
+        
+       
+    </td>
      <td>
        <div class="text-center pointer" @click="editTask(index)">
          <span class="fa fa-pencil"></span>
        </div>
      </td>
      <td>
-       <div class="text-center pointer" @click="deleteTask(index)">
-         <span class="fa fa-trash"></span>
-       </div>
-     </td>
+      <div class="text-center pointer" @click="deleteTask(index)">
+        <span class="fa fa-trash"></span>
+      </div>
+    </td>
    </tr>    
  </tbody>
  </table>
 </div>
 
+
 <style scoped>
-  .d-flex{
+ .d-flex{
  margin-left: 60px;
  margin-right: 60px;
  margin-top: 30px;
  width: 90%; 
 }
-.form-control{
+.place_holder{
  font-size: 20px;
 }
 .btn{
@@ -83,7 +100,90 @@
 .finished{
  text-decoration: line-through;
 }
+.upload-input{
+  height: 100px;
+  width: 100px; 
+  border-radius: 5px;
+  position: absolute; 
+  opacity: 0;
+}
+.uploader-mask{
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  border: 2px dashed #ccc;
+}
+.uploader-icon{
+  height: 35px; 
+}
+.uploaded_img{
+  height: 100px;
+}
+.box {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+  }
+   
+  .box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+    border-bottom: 1px solid #f4f4f4;
+    margin-bottom: 10px;
+  }
+   
+  .box-tools {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+   
+  .dropzone-wrapper {
+    border: 2px dashed #91b0b3;
+    color: #92b0b3;
+    position: relative;
+    height: 150px;
+  }
+   
+  .dropzone-desc {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 40%;
+    top: 50px;
+    font-size: 16px;
+  }
+   
+  .dropzone,
+  .dropzone:focus {
+    position: absolute;
+    outline: none !important;
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    opacity: 0;
+  }
+   
+  .dropzone-wrapper:hover,
+  .dropzone-wrapper.dragover {
+    background: #ecf0f5;
+  }
+   
+  .preview-zone {
+    text-align: center;
+  }
+   
+  .preview-zone .box {
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
 
 </style>
+
 
 {% endblock %}
